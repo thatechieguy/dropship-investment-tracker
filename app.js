@@ -209,16 +209,14 @@ function setSyncStatus(status, text) {
 // AUTHENTICATION ENGINE (EMAIL + OTP)
 // -------------------------------------------------------------
 function checkExistingSession() {
+  // Strict Security Policy: Session closes immediately on page refresh or tab closing
+  currentUser = null;
+  investments = [];
   try {
-    const savedSession = localStorage.getItem(STORAGE_KEYS.SESSION);
-    if (savedSession) {
-      currentUser = JSON.parse(savedSession);
-      showDashboardView();
-      loadData();
-      return;
-    }
+    localStorage.removeItem(STORAGE_KEYS.SESSION);
+    sessionStorage.removeItem(STORAGE_KEYS.SESSION);
   } catch (e) {
-    console.error("Session parse failed", e);
+    // ignore
   }
   showAuthView();
 }
@@ -366,7 +364,12 @@ async function handleVerifyOtp(e) {
         token: res.token,
         isDemo: false
       };
-      localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(currentUser));
+      // Keep session strictly in-memory (closes immediately on page refresh or tab closing)
+      try {
+        localStorage.removeItem(STORAGE_KEYS.SESSION);
+        sessionStorage.removeItem(STORAGE_KEYS.SESSION);
+      } catch (e) {}
+
       showDashboardView();
       loadData();
       showToast(`Welcome back, ${currentUser.name}!`, "success");
@@ -389,7 +392,11 @@ function handleDemoLogin() {
     token: "demo_token_" + Date.now(),
     isDemo: true
   };
-  localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(currentUser));
+  try {
+    localStorage.removeItem(STORAGE_KEYS.SESSION);
+    sessionStorage.removeItem(STORAGE_KEYS.SESSION);
+  } catch (e) {}
+
   showDashboardView();
   loadData();
   showToast("Loaded in Demo / Offline Mode", "info");
@@ -398,7 +405,12 @@ function handleDemoLogin() {
 function handleLogout() {
   if (confirm("Are you sure you want to log out?")) {
     currentUser = null;
-    localStorage.removeItem(STORAGE_KEYS.SESSION);
+    investments = [];
+    try {
+      localStorage.removeItem(STORAGE_KEYS.SESSION);
+      localStorage.removeItem(STORAGE_KEYS.INVESTMENTS);
+      sessionStorage.removeItem(STORAGE_KEYS.SESSION);
+    } catch (e) {}
     showAuthView();
     showToast("Logged out successfully.");
   }
@@ -1677,4 +1689,13 @@ function escapeHtml(text) {
 window.addEventListener("DOMContentLoaded", () => {
   bindEvents();
   checkExistingSession();
+});
+
+// Strict Session Cleanup on tab close / refresh
+window.addEventListener("pagehide", () => {
+  currentUser = null;
+  try {
+    localStorage.removeItem(STORAGE_KEYS.SESSION);
+    sessionStorage.removeItem(STORAGE_KEYS.SESSION);
+  } catch (e) {}
 });
