@@ -403,18 +403,18 @@
               </div>
               <div class="form-group">
                 <label class="form-label">Capital Invested (Principal)</label>
-                <input type="number" id="form-amount" class="form-input" placeholder="50000" min="100">
+                <input type="number" id="form-amount" class="form-input" placeholder="50000" min="1" step="any">
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Total Agreed Return</label>
-                <input type="number" id="form-return" class="form-input" placeholder="57500">
+                <input type="number" id="form-return" class="form-input" placeholder="57500" step="any">
               </div>
               <div class="form-group">
                 <label class="form-label">Profit Return Rate (%)</label>
-                <input type="number" id="form-roi" class="form-input" placeholder="15" step="0.1">
+                <input type="number" id="form-roi" class="form-input" placeholder="15" step="any">
               </div>
             </div>
 
@@ -440,19 +440,19 @@
               </div>
               <div class="form-group">
                 <label class="form-label">Principal Borrowed (₹)</label>
-                <input type="number" id="form-borrowed-principal" class="form-input" placeholder="50000" min="100">
+                <input type="number" id="form-borrowed-principal" class="form-input" placeholder="50000" min="1" step="any">
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Total Return from Business (₹)</label>
-                <input type="number" id="form-borrowed-gross" class="form-input" placeholder="57000">
+                <input type="number" id="form-borrowed-gross" class="form-input" placeholder="57000" step="any">
                 <span style="font-size:0.7rem; color:var(--text-muted); display:block; margin-top:0.25rem;">Total money business returns</span>
               </div>
               <div class="form-group">
                 <label class="form-label">Amount Promised to Lender (₹)</label>
-                <input type="number" id="form-borrowed-lender-pay" class="form-input" placeholder="56000">
+                <input type="number" id="form-borrowed-lender-pay" class="form-input" placeholder="56000" step="any">
                 <span style="font-size:0.7rem; color:var(--text-muted); display:block; margin-top:0.25rem;">Principal + Lender profit</span>
               </div>
             </div>
@@ -538,7 +538,7 @@
           <div id="settle-inputs-self">
             <div class="form-group">
               <label class="form-label">Actual Amount Returned (Principal + Profit)</label>
-              <input type="number" id="settle-actual-amount" class="form-input">
+              <input type="number" id="settle-actual-amount" class="form-input" step="any">
             </div>
           </div>
 
@@ -547,11 +547,11 @@
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Actual Return from Business</label>
-                <input type="number" id="settle-borrowed-actual-gross" class="form-input">
+                <input type="number" id="settle-borrowed-actual-gross" class="form-input" step="any">
               </div>
               <div class="form-group">
                 <label class="form-label">Actual Paid to Lender</label>
-                <input type="number" id="settle-borrowed-actual-lender" class="form-input">
+                <input type="number" id="settle-borrowed-actual-lender" class="form-input" step="any">
               </div>
             </div>
           </div>
