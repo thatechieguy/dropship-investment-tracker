@@ -666,12 +666,13 @@ function renderMetrics() {
       ? `Gross: ${formatCurrency(cycle.expectedReturn)} (Pay lender: ${formatCurrency(cycle.lenderReturn || cycle.expectedReturn)})`
       : `Payout: <strong>${formatCurrency(cycle.expectedReturn)}</strong>`;
 
+    const escapedTitle = escapeHtml(cycle.title || "Investment Batch");
     if (cycle.daysDiff < 0) {
-      text = `<span class="reminder-highlight">⚠️ OVERDUE by ${Math.abs(cycle.daysDiff)} days:</span> "${cycle.title}" (${payoutLabel}) was due on ${formatDate(cycle.dueDate)}.`;
+      text = `<span class="reminder-highlight">⚠️ OVERDUE by ${Math.abs(cycle.daysDiff)} days:</span> "${escapedTitle}" (${payoutLabel}) was due on ${formatDate(cycle.dueDate)}.`;
     } else if (cycle.daysDiff === 0) {
-      text = `<span class="reminder-highlight">🔔 DUE TODAY:</span> "${cycle.title}" (${payoutLabel}) is scheduled for return today!`;
+      text = `<span class="reminder-highlight">🔔 DUE TODAY:</span> "${escapedTitle}" (${payoutLabel}) is scheduled for return today!`;
     } else {
-      text = `<span class="reminder-highlight">⏳ Due in ${cycle.daysDiff} days:</span> "${cycle.title}" (${payoutLabel}) scheduled on ${formatDate(cycle.dueDate)}.`;
+      text = `<span class="reminder-highlight">⏳ Due in ${cycle.daysDiff} days:</span> "${escapedTitle}" (${payoutLabel}) scheduled on ${formatDate(cycle.dueDate)}.`;
     }
     document.getElementById("reminder-text-span").innerHTML = text;
   } else {
